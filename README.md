@@ -4,7 +4,7 @@ A repository created to summarize all the commands, referenced websites and exam
 ### 1. Docker Installation & Basics
 [Documentation](https://github.com/tejalbarnwal/docker-tutorial/blob/main/basics.md)
 
-### 2. Example dockerfile to run another g++ compiler
+### 2. Sample dockerfile
 [Documentation](https://github.com/tejalbarnwal/docker-tutorial/blob/main/docker_egs/D2/Dockerfile)
 
 ### 3. ROS in Docker
