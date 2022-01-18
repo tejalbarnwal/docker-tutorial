@@ -1,6 +1,6 @@
 FROM nvidia/cudagl:11.1.1-base-ubuntu20.04
 
-# Minimal setup
+# minimal setup
 RUN apt-get update \
  && apt-get install -y locales lsb-release
 ARG DEBIAN_FRONTEND=noninteractive
@@ -16,21 +16,3 @@ RUN rosdep init \
  && rosdep fix-permissions \
  && rosdep update
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-
-# RUN apt-get install git
-# RUN git config --global user.name "tejalbarnwal"
-# RUN git config --global user.email "tejalbarnwal@gmail.com"
-RUN apt-get update && sudo apt-get install build-essential -y
-
-COPY . /home/catkin_ws/src
-
-WORKDIR /home/catkin_ws
-
-# RUN catkin_make
-
-# RUN cd devel
-
-# RUN source setup.sh
-
-# WORKDIR /home
-# ADD go /usr/local/
