@@ -1,9 +1,27 @@
 #!/bin/sh
 
+# build base.Dockerfile to create its image named rd-base
 docker build -t rd-base -f base.Dockerfile .
+# build ros.Dockerfile to use its image named rd-ros
 docker build -t rd-ros -f ros.Dockerfile .
 
+# can skip this, its just that we defined a variable like we define in a prgrommang language which could be used later
 DOCKER_H=/home/tejal
+
+# here we run docker image rd-ros that creates a container
+# it takes many arguments
+# -it:
+# --rm:
+# --name:
+# --priviledged: 
+# --gpus all:
+# -e DISPLAY:
+# -e XAUTHORITY=/tmp/.Xauthority \
+# -v ${XAUTHORITY}:/tmp/.Xauthority \
+# -v /tmp/.X11-unix:/tmp/.X11-unix \
+# -v /home/radiant/hello:${DOCKER_H}/ros2_ws \
+
+
 docker run -it \
       --rm \
       --name rd2_container \

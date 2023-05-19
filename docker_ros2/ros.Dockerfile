@@ -22,6 +22,8 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/r
 # update packages
 RUN sudo apt update
 
+# ROS2 rquires usto select keyboard-configuration according to country/region we are located in
+# doing debian non interactive eleminates its condition to require input and its defaults to the normal configuration
 RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y keyboard-configuration
 
 # install ros2 with deskptop versiomn
@@ -29,5 +31,4 @@ RUN sudo apt install -y ros-foxy-desktop python3-argcomplete
 
 # # source the environment with zsh
 RUN /bin/zsh -c 'source /opt/ros/foxy/setup.zsh'
-# RUN echo "toor\n" | sudo -S apt-get update -y \
 
