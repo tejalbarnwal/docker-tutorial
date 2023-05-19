@@ -1,14 +1,13 @@
-# Ubuntu 18.04 with nvidia-docker2 beta opengl support
+# Ubuntu 20.04 with nvidia-docker with opengl support
 FROM nvidia/opengl:1.0-glvnd-devel-ubuntu20.04
 
-# ENV TZ=Asia/Kolkata \
-#     DEBIAN_FRONTEND=noninteractive
+# ENV DEBIAN_FRONTEND noninteractive
 
-ENV DEBIAN_FRONTEND noninteractive
-
+# update apt pkgs
 RUN apt-get update
 
-RUN apt-get install -y -qq \
+# install some tools that would be commonly used
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
         build-essential \
         bwm-ng \
         cmake \
@@ -41,8 +40,10 @@ RUN apt-get install -y -qq \
         tmux \
         language-pack-en
 
+# update system Locale
 RUN update-locale
 
+# clean the cache memory
 RUN apt-get clean -qq
 
 # Add a user with the same user_id as the user outside the container
@@ -60,6 +61,7 @@ USER $USERNAME
 # # When running a container start in the developer's home folder
 WORKDIR /home/$USERNAME
 
+# we update time-zone data
 RUN export DEBIAN_FRONTEND=noninteractive \
  && sudo apt-get update -qq \
  && sudo -E apt-get install -y -qq \
@@ -68,14 +70,17 @@ RUN export DEBIAN_FRONTEND=noninteractive \
  && sudo dpkg-reconfigure --frontend noninteractive tzdata \
  && sudo apt-get clean -qq
 
-# # reference: trunc8
-# # run the installation script  
+# the above script was created in reference to ____<adding it later>
+#---------------------------------------------------------------------------------------------------------
+
+# # run the oh-my-zsh installation script  
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 # # it continues to remain in zsh in future images
 SHELL ["/bin/zsh", "-c"]
-# # zsh plugins
-RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
-&& git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-
 
 CMD ["zsh"]
+
+ENV NVIDIA_VISIBLE_DEVICES \
+    ${NVIDIA_VISIBLE_DEVICES:-all}
+ENV NVIDIA_DRIVER_CAPABILITIES \
+    ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics

@@ -32,3 +32,8 @@ RUN sudo apt install -y ros-foxy-desktop python3-argcomplete
 # # source the environment with zsh
 RUN /bin/zsh -c 'source /opt/ros/foxy/setup.zsh'
 
+ENV NVIDIA_VISIBLE_DEVICES \
+    ${NVIDIA_VISIBLE_DEVICES:-all}
+ENV NVIDIA_DRIVER_CAPABILITIES \
+    ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
+
