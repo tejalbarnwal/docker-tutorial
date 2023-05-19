@@ -1,0 +1,18 @@
+#!/bin/sh
+
+docker build -t rd-base -f base.Dockerfile .
+docker build -t rd-ros -f ros.Dockerfile .
+
+DOCKER_H=/home/tejal
+docker run -it \
+      --rm \
+      --name rd2_container \
+      --net=host \
+      --privileged \
+      --gpus all \
+      -e DISPLAY \
+      -e XAUTHORITY=/tmp/.Xauthority \
+      -v ${XAUTHORITY}:/tmp/.Xauthority \
+      -v /tmp/.X11-unix:/tmp/.X11-unix \
+      -v /home/radiant/hello:${DOCKER_H}/ros2_ws \
+      rd-ros
